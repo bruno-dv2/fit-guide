@@ -49,8 +49,15 @@ class MainActivity : AppCompatActivity() {
             // Aqui seria logica com banco de dados, para funcionar, so coloquei um bem-sucedido aqui
             Toast.makeText(this, "Login bem-sucedido", Toast.LENGTH_SHORT).show()
             // You would then navigate to the next activity
-            val intent = Intent(this, HomeProfessor::class.java)
-            startActivity(intent)
+            if (isProfessor) {
+                val intent = Intent(this, HomeProfessor::class.java)
+                startActivity(intent)
+                finish()
+            } else if (isAluno) {
+                val intent = Intent(this, HomeAluno::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 
         criarContaButton.setOnClickListener {
