@@ -13,8 +13,6 @@
         android:theme="@style/Theme.FitGuide"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
-=======
             android:name=".GerenciarEquipamentos"
             android:exported="false" />
         <activity
@@ -24,28 +22,12 @@
             android:name=".CriarEquipamento"
             android:exported="false" />
         <activity
->>>>>>> 47db03ea02c08ce83237e76ba8b59508e6942a8e
             android:name=".DetalheExercicio"
             android:exported="false" />
         <activity
             android:name=".MeuTreino"
             android:exported="false" />
         <activity
-<<<<<<< HEAD
-            android:name=".EditarPerfil"
-            android:exported="false" />
-        <activity
-            android:name=".Acessibilidade"
-            android:exported="false" />
-        <activity
-            android:name=".MeuPerfil"
-            android:exported="false" />
-        <activity
-            android:name=".ChatbotActivity"
-            android:exported="false" />
-        <activity
-=======
->>>>>>> 47db03ea02c08ce83237e76ba8b59508e6942a8e
             android:name=".HomeAluno"
             android:exported="false" />
         <activity
@@ -58,27 +40,12 @@
             android:name=".EditarExercicio"
             android:exported="false" />
         <activity
-            android:name=".DeletarExercicio"
-            android:exported="false" />
-        <activity
             android:name=".Categorias"
             android:exported="false" />
         <activity
             android:name=".CriarExercicio"
             android:exported="false" />
         <activity
-            android:name=".CategoriaPeito"
-            android:exported="false" />
-        <activity
-<<<<<<< HEAD
-            android:name=".GerenciarEquipamentos"
-            android:exported="false"/>
-        <activity
-            android:name=".CriarEquipamento"
-            android:exported="false" />
-        <activity
-=======
->>>>>>> 47db03ea02c08ce83237e76ba8b59508e6942a8e
             android:name=".GerenciarExercicios"
             android:exported="false" />
         <activity
@@ -89,10 +56,21 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Acessibilidade"
+            android:exported="true"/>
+        <activity
+            android:name=".MeuPerfil"
+            android:exported="true"/>
+        <activity
+            android:name=".EditarPerfil"
+            android:exported="false" />
+        <activity
+            android:name=".ChatbotActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>
