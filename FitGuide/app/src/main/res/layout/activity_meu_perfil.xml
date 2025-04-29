@@ -6,50 +6,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:padding="16dp"
     tools:context=".MeuPerfil">
 
-    <!-- Cabeçalho cinza -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cabecalho"
-        android:layout_width="0dp"
-        android:layout_height="68dp"
-        android:background="#E0E0E0"
-        app:layout_constraintTop_toTopOf="parent"
+    <!-- Back Button (ImageButton) -->
+    <ImageButton
+        android:id="@+id/imageButtonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_back"
+        android:contentDescription="Botão Voltar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Botão Voltar -->
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:contentDescription="Botão Voltar"
-            android:src="@drawable/ic_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!-- Title -->
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Meu Perfil"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonBack" />
 
-        <!-- Título -->
-        <TextView
-            android:id="@+id/textViewTitulo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:gravity="center"
-            android:text="Meu Perfil"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.39"
-            app:layout_constraintStart_toEndOf="@id/btnBack"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.512" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Imagem de Perfil -->
+    <!-- Profile Image -->
     <ImageView
         android:id="@+id/imagemPerfil"
         android:layout_width="100dp"
@@ -57,83 +41,74 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/circle_background"
         android:contentDescription="Imagem de Perfil"
-        app:layout_constraintTop_toBottomOf="@+id/cabecalho"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
-    <!-- Nome do Usuário -->
+    <!-- User Name -->
     <TextView
         android:id="@+id/textViewNome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Fulano Silva"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/imagemPerfil"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imagemPerfil" />
 
-    <!-- Botão Editar Perfil -->
+    <!-- Edit Profile Button -->
     <Button
-        android:id="@+id/botaoEditarPerfil"
+        android:id="@+id/buttonEditarPerfil"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Editar Perfil"
-        android:backgroundTint="#E0E0E0"
-        android:textColor="@android:color/black"
-        android:drawableEnd="@drawable/ic_arrow_right"
-        android:gravity="start|center_vertical"
-        android:padding="12dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNome"
+        android:backgroundTint="@android:color/black"
+        android:text="Editar Perfil"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
 
-    <!-- Botão Acessibilidade -->
+    <!-- Accessibility Button -->
     <Button
-        android:id="@+id/botaoAcessibilidade"
+        android:id="@+id/buttonAcessibilidade"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/black"
         android:text="Acessibilidade"
-        android:backgroundTint="#E0E0E0"
-        android:textColor="@android:color/black"
-        android:drawableEnd="@drawable/ic_arrow_right"
-        android:gravity="start|center_vertical"
-        android:padding="12dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/botaoEditarPerfil"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonEditarPerfil" />
 
-    <!-- Botão Minhas Fichas -->
+    <!-- My Sheets Button -->
     <Button
-        android:id="@+id/botaoMinhasFichas"
+        android:id="@+id/buttonMinhasFichas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Minhas Fichas"
-        android:backgroundTint="#E0E0E0"
-        android:textColor="@android:color/black"
-        android:drawableEnd="@drawable/ic_arrow_right"
-        android:gravity="start|center_vertical"
-        android:padding="12dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/botaoAcessibilidade"
+        android:backgroundTint="@android:color/black"
+        android:text="Minhas Fichas"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAcessibilidade" />
 
-    <!-- Texto Excluir Conta -->
+    <!-- Delete Account Text -->
     <TextView
         android:id="@+id/textViewExcluirConta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Excluir conta"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="14sp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/botaoMinhasFichas"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonMinhasFichas" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
