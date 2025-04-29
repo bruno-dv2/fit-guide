@@ -22,10 +22,10 @@ class HomeProfessor : AppCompatActivity() {
         }
 
         // Set up click listeners for the other buttons
-       binding.buttonGerenciarExercicios.setOnClickListener {
+        binding.buttonGerenciarExercicios.setOnClickListener {
             val intent = Intent(this, GerenciarExercicios::class.java)
-           startActivity(intent)
-       }
+            startActivity(intent)
+        }
 //
 //        binding.buttonGerenciarUsuarios.setOnClickListener {
 //            val intent = Intent(this, GerenciarUsuariosActivity::class.java)
@@ -40,20 +40,11 @@ class HomeProfessor : AppCompatActivity() {
         binding.buttonGerenciarEquipamentos.setOnClickListener {
             val intent = Intent(this, GerenciarEquipamentos::class.java)
             startActivity(intent)
-<<<<<<< HEAD
-       }
+        }
 
        binding.buttonMeuPerfil.setOnClickListener {
-            val intent = Intent(this, MeuPerfil::class.java)
-            startActivity(intent)
+           val intent = Intent(this, MeuPerfil::class.java)
+           startActivity(intent)
         }
-=======
-        }
-
-//        binding.buttonMeuPerfil.setOnClickListener {
-//            val intent = Intent(this, MeuPerfilActivity::class.java)
-//            startActivity(intent)
-//        }
->>>>>>> 47db03ea02c08ce83237e76ba8b59508e6942a8e
     }
 }
