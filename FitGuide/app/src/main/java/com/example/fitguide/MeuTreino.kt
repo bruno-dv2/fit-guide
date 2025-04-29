@@ -24,6 +24,8 @@ class MeuTreino : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMeuTreinoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        exibirDiasDaSemana()
+
 
         // Configurar o botão de voltar
         val botaoVoltar: ImageButton = binding.imageButtonBack
@@ -43,6 +45,25 @@ class MeuTreino : AppCompatActivity() {
             finish() // Voltar para a tela anterior
         }
     }
+
+    private fun exibirDiasDaSemana() {
+        val layoutDias = binding.layoutDiasSemana
+        val dias = listOf("S", "T", "Q", "Q", "S", "S", "D")
+        val hoje = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) // 1 = Domingo, 2 = Segunda...
+
+        for ((index, letra) in dias.withIndex()) {
+            val textView = TextView(this)
+            textView.text = letra
+            textView.textSize = 18f
+            textView.setPadding(16, 8, 16, 8)
+            textView.setTextColor(if ((index + 1) == hoje) resources.getColor(android.R.color.white) else resources.getColor(android.R.color.black))
+            textView.setBackgroundColor(if ((index + 1) == hoje) resources.getColor(android.R.color.darker_gray) else android.graphics.Color.TRANSPARENT)
+            textView.setTypeface(null, android.graphics.Typeface.BOLD)
+
+            layoutDias.addView(textView)
+        }
+    }
+
 
     private fun atualizarDiaETreino(): String {
         // Obter o dia atual da semana
