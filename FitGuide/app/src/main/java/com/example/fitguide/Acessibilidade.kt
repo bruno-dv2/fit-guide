@@ -25,7 +25,7 @@ class Acessibilidade : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("AcessibilidadePrefs", Context.MODE_PRIVATE)
 
-        // Carregar configurações salvas
+
         switchAltoContraste.isChecked = sharedPreferences.getBoolean("altoContraste", false)
         switchTamanhoTexto.isChecked = sharedPreferences.getBoolean("tamanhoTexto", false)
         switchDescricaoImagens.isChecked = sharedPreferences.getBoolean("descricaoImagens", false)
