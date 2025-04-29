@@ -5,6 +5,12 @@
       <SelectionState runConfigName="FitGuide.app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+<<<<<<< HEAD
+=======
+      <SelectionState runConfigName="HomeAluno">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+>>>>>>> 47db03ea02c08ce83237e76ba8b59508e6942a8e
     </selectionStates>
   </component>
 </project>

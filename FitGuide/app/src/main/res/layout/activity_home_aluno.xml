@@ -266,7 +266,11 @@
 
     <!-- Botão de Chat para Dúvidas -->
     <Button
+<<<<<<< HEAD
         android:id="@+id/botaoChatbot"
+=======
+        android:id="@+id/buttonChat"
+>>>>>>> 47db03ea02c08ce83237e76ba8b59508e6942a8e
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -278,6 +282,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSexta" />
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 47db03ea02c08ce83237e76ba8b59508e6942a8e
 </androidx.constraintlayout.widget.ConstraintLayout>
