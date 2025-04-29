@@ -3,79 +3,80 @@ package com.example.fitguide
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.fitguide.databinding.ActivityMeuTreinoBinding
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
+import java.util.*
 
 class MeuTreino : AppCompatActivity() {
+
     private lateinit var binding: ActivityMeuTreinoBinding
-    private val exercicios = mutableListOf<Pair<String, String>>() // Nome do exercício, Detalhes
+    private val exercicios = mutableListOf<Pair<String, String>>()
+    private var diaSelecionado: Int = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMeuTreinoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        exibirDiasDaSemana()
 
-
-        // Configurar o botão de voltar
-        val botaoVoltar: ImageButton = binding.imageButtonBack
-        botaoVoltar.setOnClickListener {
-            finish() // Voltar para a tela anterior
+        binding.imageButtonBack.setOnClickListener {
+            finish()
         }
 
-        // Atualizar o dia atual e o tipo de treino
-        val tipoTreino = atualizarDiaETreino()
+        exibirDiasDaSemana(diaSelecionado)
+        val tipo = obterTipoTreino(diaSelecionado)
+        atualizarTreino(tipo, diaSelecionado)
 
-        // Carregar os exercícios com base no tipo de treino
-        carregarExercicios(tipoTreino)
-
-        // Configurar o botão de finalizar treino
         binding.buttonFinalizar.setOnClickListener {
-            Toast.makeText(this, "Treino finalizado com sucesso!", Toast.LENGTH_SHORT).show()
-            finish() // Voltar para a tela anterior
+            TreinoConcluidoStorage.marcarComoConcluido(diaSelecionado)
+
+            val resultIntent = Intent()
+            resultIntent.putExtra("diaFinalizado", diaSelecionado)
+            setResult(RESULT_OK, resultIntent)
+
+            Toast.makeText(this, "Treino finalizado!", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
-    private fun exibirDiasDaSemana() {
+    private fun exibirDiasDaSemana(diaAtual: Int) {
         val layoutDias = binding.layoutDiasSemana
-        val dias = listOf("S", "T", "Q", "Q", "S", "S", "D")
-        val hoje = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) // 1 = Domingo, 2 = Segunda...
+        layoutDias.removeAllViews()
 
-        for ((index, letra) in dias.withIndex()) {
-            val textView = TextView(this)
-            textView.text = letra
-            textView.textSize = 18f
-            textView.setPadding(16, 8, 16, 8)
-            textView.setTextColor(if ((index + 1) == hoje) resources.getColor(android.R.color.white) else resources.getColor(android.R.color.black))
-            textView.setBackgroundColor(if ((index + 1) == hoje) resources.getColor(android.R.color.darker_gray) else android.graphics.Color.TRANSPARENT)
-            textView.setTypeface(null, android.graphics.Typeface.BOLD)
+        val dias = listOf("DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB")
 
-            layoutDias.addView(textView)
+        for ((index, nomeDia) in dias.withIndex()) {
+            val button = Button(this).apply {
+                text = nomeDia
+                setPadding(24, 8, 24, 8)
+                setTextColor(resources.getColor(android.R.color.white))
+                setBackgroundColor(
+                    if (index + 1 == diaAtual) resources.getColor(android.R.color.holo_blue_dark)
+                    else resources.getColor(android.R.color.darker_gray)
+                )
+
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(8, 0, 8, 0)
+                }
+
+                setOnClickListener {
+                    diaSelecionado = index + 1
+                    exibirDiasDaSemana(diaSelecionado)
+                    val tipo = obterTipoTreino(diaSelecionado)
+                    atualizarTreino(tipo, diaSelecionado)
+                }
+            }
+
+            layoutDias.addView(button)
         }
     }
 
-
-    private fun atualizarDiaETreino(): String {
-        // Obter o dia atual da semana
-        val calendar = Calendar.getInstance()
-        val diaDaSemana = calendar.get(Calendar.DAY_OF_WEEK)
-
-        // Formatar o nome do dia da semana
-        val formatoDia = SimpleDateFormat("EEEE", Locale("pt", "BR"))
-        val nomeDoDia = formatoDia.format(calendar.time).capitalize(Locale.ROOT)
-
-        // Definir o tipo de treino com base no dia da semana
-        val tipoTreino = when (diaDaSemana) {
+    private fun obterTipoTreino(dia: Int): String {
+        return when (dia) {
             Calendar.MONDAY -> "Braços"
             Calendar.TUESDAY -> "Pernas"
             Calendar.WEDNESDAY -> "Peito"
@@ -84,24 +85,36 @@ class MeuTreino : AppCompatActivity() {
             Calendar.SATURDAY, Calendar.SUNDAY -> "Descanso"
             else -> "Indefinido"
         }
-
-        // Atualizar o texto na interface do usuário
-        if (tipoTreino == "Descanso") {
-            binding.textViewDiaAtual.text = "$nomeDoDia: Dia de Descanso"
-        } else {
-            binding.textViewDiaAtual.text = "$nomeDoDia: Treino de $tipoTreino"
-        }
-
-        return tipoTreino
     }
 
-    private fun carregarExercicios(tipoTreino: String) {
+    private fun atualizarTreino(tipoTreino: String, dia: Int) {
         val scrollContent = binding.scrollView.getChildAt(0) as LinearLayout
         scrollContent.removeAllViews()
-
         exercicios.clear()
 
-        // Definir os exercícios com base no tipo de treino
+        val nomeDia = when (dia) {
+            Calendar.SUNDAY -> "Domingo"
+            Calendar.MONDAY -> "Segunda-feira"
+            Calendar.TUESDAY -> "Terça-feira"
+            Calendar.WEDNESDAY -> "Quarta-feira"
+            Calendar.THURSDAY -> "Quinta-feira"
+            Calendar.FRIDAY -> "Sexta-feira"
+            Calendar.SATURDAY -> "Sábado"
+            else -> "Dia"
+        }
+
+        if (tipoTreino == "Descanso") {
+            binding.textViewDiaAtual.text = "$nomeDia: Dia de Descanso"
+            val descansoText = TextView(this)
+            descansoText.text = "Hoje é dia de descanso. Aproveite para recuperar os músculos!"
+            descansoText.textSize = 16f
+            descansoText.setPadding(16, 32, 16, 0)
+            scrollContent.addView(descansoText)
+            return
+        }
+
+        binding.textViewDiaAtual.text = "$nomeDia: Treino de $tipoTreino"
+
         when (tipoTreino) {
             "Peito" -> {
                 exercicios.add(Pair("Supino Reto", "4 séries x 12 repetições"))
@@ -118,38 +131,27 @@ class MeuTreino : AppCompatActivity() {
                 exercicios.add(Pair("Leg Press", "4 séries x 12 repetições"))
                 exercicios.add(Pair("Cadeira Extensora", "4 séries x 12 repetições"))
             }
-            "Descanso" -> {
-                // Não adicionar exercícios em dias de descanso
-                val textView = TextView(this)
-                textView.text = "Hoje é dia de descanso. Aproveite para recuperar os músculos!"
-                textView.textSize = 16f
-                textView.setPadding(0, 16, 0, 16)
-                scrollContent.addView(textView)
-                return
-            }
         }
 
-        // Adicionar os exercícios à interface
         for (exercicio in exercicios) {
             val inflater = LayoutInflater.from(this)
-            val exercicioView = inflater.inflate(R.layout.item_exercicio, null)
+            val view = inflater.inflate(R.layout.item_exercicio, null)
 
-            val nomeExercicio = exercicioView.findViewById<TextView>(R.id.textViewNomeExercicio)
-            val detalhesExercicio = exercicioView.findViewById<TextView>(R.id.textViewDetalhesExercicio)
-            val checkBox = exercicioView.findViewById<CheckBox>(R.id.checkBoxExercicio)
-            val cardView = exercicioView.findViewById<CardView>(R.id.cardViewExercicio)
+            val nome = view.findViewById<TextView>(R.id.textViewNomeExercicio)
+            val detalhes = view.findViewById<TextView>(R.id.textViewDetalhesExercicio)
+            val checkBox = view.findViewById<CheckBox>(R.id.checkBoxExercicio)
+            val card = view.findViewById<CardView>(R.id.cardViewExercicio)
 
-            nomeExercicio.text = exercicio.first
-            detalhesExercicio.text = exercicio.second
+            nome.text = exercicio.first
+            detalhes.text = exercicio.second
 
-            // Configurar clique no card para abrir tela de detalhes
-            cardView.setOnClickListener {
+            card.setOnClickListener {
                 val intent = Intent(this, DetalheExercicio::class.java)
                 intent.putExtra("nomeExercicio", exercicio.first)
                 startActivity(intent)
             }
 
-            scrollContent.addView(exercicioView)
+            scrollContent.addView(view)
         }
     }
 }
