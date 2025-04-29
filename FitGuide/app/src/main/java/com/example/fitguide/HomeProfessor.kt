@@ -37,11 +37,11 @@ class HomeProfessor : AppCompatActivity() {
 //            startActivity(intent)
 //        }
 //
-//        binding.buttonGerenciarEquipamentos.setOnClickListener {
-//            val intent = Intent(this, GerenciarEquipamentosActivity::class.java)
-//            startActivity(intent)
-//        }
-//
+        binding.buttonGerenciarEquipamentos.setOnClickListener {
+            val intent = Intent(this, GerenciarEquipamentos::class.java)
+            startActivity(intent)
+        }
+
 //        binding.buttonMeuPerfil.setOnClickListener {
 //            val intent = Intent(this, MeuPerfilActivity::class.java)
 //            startActivity(intent)
