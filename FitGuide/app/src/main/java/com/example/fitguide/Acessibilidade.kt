@@ -14,7 +14,6 @@ class Acessibilidade : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_acessibilidade)
 
-        AcessibilidadeManager.aplicarAcessibilidade(this, findViewById(android.R.id.content))
 
 
         val btnBack = findViewById<ImageView>(R.id.btnBack)

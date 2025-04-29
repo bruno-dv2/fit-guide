@@ -13,8 +13,6 @@ class EditarPerfil : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_perfil)
 
-        AcessibilidadeManager.aplicarAcessibilidade(this, findViewById(android.R.id.content))
-
 
         val btnVoltar = findViewById<ImageView>(R.id.btnBack)
         val btnSalvar = findViewById<Button>(R.id.botaoSalvar)

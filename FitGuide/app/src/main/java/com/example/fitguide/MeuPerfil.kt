@@ -15,10 +15,10 @@ class MeuPerfil : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_meu_perfil)
 
-        val btnBack = findViewById<ImageView>(R.id.btnBack)
-        val botaoEditarPerfil = findViewById<Button>(R.id.botaoEditarPerfil)
-        val botaoAcessibilidade = findViewById<Button>(R.id.botaoAcessibilidade)
-        val botaoMinhasFichas = findViewById<Button>(R.id.botaoMinhasFichas)
+        val btnBack = findViewById<ImageView>(R.id.imageButtonBack)
+        val botaoEditarPerfil = findViewById<Button>(R.id.buttonEditarPerfil)
+        val botaoAcessibilidade = findViewById<Button>(R.id.buttonAcessibilidade)
+        val botaoMinhasFichas = findViewById<Button>(R.id.buttonMinhasFichas)
         val excluirConta = findViewById<TextView>(R.id.textViewExcluirConta)
 
         btnBack.setOnClickListener {
@@ -40,9 +40,6 @@ class MeuPerfil : AppCompatActivity() {
         excluirConta.setOnClickListener {
             // Aqui você pode colocar uma confirmação para excluir a conta futuramente
         }
-
-        val rootLayout = findViewById<ConstraintLayout>(R.id.layoutRoot)
-        AcessibilidadeManager.aplicarAcessibilidade(this, rootLayout)
 
     }
 }

@@ -62,7 +62,7 @@ class CriarConta : AppCompatActivity() {
         // Set click listener for the back button
         botaoVoltar.setOnClickListener {
             // Navigate back to HomeProfessor
-            val intent = Intent(this, HomeProfessor::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish() // Close the current activity
         }
