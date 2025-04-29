@@ -13,12 +13,25 @@
         android:theme="@style/Theme.FitGuide"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
+=======
+            android:name=".GerenciarEquipamentos"
+            android:exported="false" />
+        <activity
+            android:name=".EditarEquipamento"
+            android:exported="false" />
+        <activity
+            android:name=".CriarEquipamento"
+            android:exported="false" />
+        <activity
+>>>>>>> 47db03ea02c08ce83237e76ba8b59508e6942a8e
             android:name=".DetalheExercicio"
             android:exported="false" />
         <activity
             android:name=".MeuTreino"
             android:exported="false" />
         <activity
+<<<<<<< HEAD
             android:name=".EditarPerfil"
             android:exported="false" />
         <activity
@@ -31,6 +44,8 @@
             android:name=".ChatbotActivity"
             android:exported="false" />
         <activity
+=======
+>>>>>>> 47db03ea02c08ce83237e76ba8b59508e6942a8e
             android:name=".HomeAluno"
             android:exported="false" />
         <activity
@@ -55,12 +70,15 @@
             android:name=".CategoriaPeito"
             android:exported="false" />
         <activity
+<<<<<<< HEAD
             android:name=".GerenciarEquipamentos"
             android:exported="false"/>
         <activity
             android:name=".CriarEquipamento"
             android:exported="false" />
         <activity
+=======
+>>>>>>> 47db03ea02c08ce83237e76ba8b59508e6942a8e
             android:name=".GerenciarExercicios"
             android:exported="false" />
         <activity
