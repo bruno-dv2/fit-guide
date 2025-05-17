@@ -26,25 +26,26 @@ class HomeProfessor : AppCompatActivity() {
             val intent = Intent(this, GerenciarExercicios::class.java)
             startActivity(intent)
         }
-//
-//        binding.buttonGerenciarUsuarios.setOnClickListener {
-//            val intent = Intent(this, GerenciarUsuariosActivity::class.java)
-//            startActivity(intent)
-//        }
-//
-//        binding.buttonGerenciarFichas.setOnClickListener {
-//            val intent = Intent(this, GerenciarFichasActivity::class.java)
-//            startActivity(intent)
-//        }
-//
+
+        binding.buttonGerenciarUsuarios.setOnClickListener {
+            val intent = Intent(this, GerenciarUsuarios::class.java)
+            startActivity(intent)
+        }
+
+        // Comentado por enquanto, será implementado na Fase 3
+        // binding.buttonGerenciarFichas.setOnClickListener {
+        //     val intent = Intent(this, GerenciarFichasActivity::class.java)
+        //     startActivity(intent)
+        // }
+
         binding.buttonGerenciarEquipamentos.setOnClickListener {
             val intent = Intent(this, GerenciarEquipamentos::class.java)
             startActivity(intent)
         }
 
-       binding.buttonMeuPerfil.setOnClickListener {
-           val intent = Intent(this, MeuPerfil::class.java)
-           startActivity(intent)
+        binding.buttonMeuPerfil.setOnClickListener {
+            val intent = Intent(this, MeuPerfil::class.java)
+            startActivity(intent)
         }
     }
 }

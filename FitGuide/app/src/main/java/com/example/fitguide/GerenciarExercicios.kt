@@ -2,7 +2,6 @@ package com.example.fitguide
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fitguide.databinding.ActivityGerenciarExerciciosBinding
 
@@ -18,10 +17,7 @@ class GerenciarExercicios : AppCompatActivity() {
 
         origemAluno = intent.getBooleanExtra("origemAluno", false)
 
-        // Configurar o botão de voltar
-        val botaoVoltar: ImageButton = binding.imageButtonBack
-        botaoVoltar.setOnClickListener {
-            // Navegar de volta para HomeProfessor ou HomeAluno
+        binding.imageButtonBack.setOnClickListener {
             if (origemAluno) {
                 val intent = Intent(this, HomeAluno::class.java)
                 startActivity(intent)
@@ -29,10 +25,9 @@ class GerenciarExercicios : AppCompatActivity() {
                 val intent = Intent(this, HomeProfessor::class.java)
                 startActivity(intent)
             }
-            finish() // Fechar a atividade atual
+            finish()
         }
 
-        // Configurar os listeners de clique para os botões de categoria muscular
         binding.buttonPeito.setOnClickListener {
             iniciarCategoria("Peito")
         }

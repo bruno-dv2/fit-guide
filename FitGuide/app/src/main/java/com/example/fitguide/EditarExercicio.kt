@@ -1,7 +1,7 @@
 package com.example.fitguide
 
 import android.os.Bundle
-import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fitguide.databinding.ActivityEditarExercicioBinding
 
@@ -32,22 +32,34 @@ class EditarExercicio : AppCompatActivity() {
         binding.campoLink.setText(exercicio.linkVideo)
 
         // Configurar o botão de salvar
-        val botaoSalvar: Button = binding.botaoSalvar
-        botaoSalvar.setOnClickListener {
-            // Atualizar os dados do exercício
-            exercicio.nome = binding.campoNome.text.toString()
-            exercicio.equipamento = binding.campoEquipamento.text.toString()
-            exercicio.descricaoTecnica = binding.campoDescricao.text.toString()
-            exercicio.musculosTrabalhados = binding.campoMusculos.text.toString()
-            exercicio.linkVideo = binding.campoLink.text.toString()
+        binding.botaoSalvar.setOnClickListener {
+            // Validar campos
+            val nome = binding.campoNome.text.toString()
+            val equipamento = binding.campoEquipamento.text.toString()
+            val descricao = binding.campoDescricao.text.toString()
+            val musculos = binding.campoMusculos.text.toString()
+            val link = binding.campoLink.text.toString()
 
+            if (nome.isBlank() || equipamento.isBlank() || descricao.isBlank() || musculos.isBlank()) {
+                Toast.makeText(this, "Preencha todos os campos obrigatórios", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Atualizar os dados do exercício
+            exercicio.nome = nome
+            exercicio.equipamento = equipamento
+            exercicio.descricaoTecnica = descricao
+            exercicio.musculosTrabalhados = musculos
+            exercicio.linkVideo = link
+
+            Toast.makeText(this, "Exercício atualizado com sucesso", Toast.LENGTH_SHORT).show()
             finish()
         }
 
         // Configurar o botão de deletar
-        val botaoDeletar: Button = binding.botaoDeletar
-        botaoDeletar.setOnClickListener {
+        binding.botaoDeletar.setOnClickListener {
             BancoTemporario.deleteExercicio(exercicio)
+            Toast.makeText(this, "Exercício excluído com sucesso", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
