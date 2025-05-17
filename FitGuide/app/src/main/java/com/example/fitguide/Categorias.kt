@@ -3,81 +3,93 @@ package com.example.fitguide
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.fitguide.databinding.ActivityCategoriasBinding
+import com.example.fitguide.repositories.ExercicioRepository
+import kotlinx.coroutines.launch
 
 class Categorias : AppCompatActivity() {
 
     private lateinit var binding: ActivityCategoriasBinding
-    private lateinit var listaExerciciosView: LinearLayout
-    private lateinit var textoStatus: TextView
     private lateinit var categoria: String
+    private var origemAluno = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCategoriasBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        listaExerciciosView = binding.linearLayoutExercises
-        textoStatus = binding.textViewNoExercises
-
-        // Obter o nome da categoria da Intent
         categoria = intent.getStringExtra("categoria")
             ?: throw IllegalArgumentException("Categoria deve ser passada para Categorias")
 
-        // Definir o título da tela
+        origemAluno = intent.getBooleanExtra("origemAluno", false)
+
         binding.textViewTitle.text = "Exercícios da Categoria: $categoria"
 
-        // Configurar o botão de voltar
-        val botaoVoltar: ImageButton = binding.imageButtonBack
-        botaoVoltar.setOnClickListener {
+        binding.imageButtonBack.setOnClickListener {
             finish()
         }
 
-        // Configurar o botão de adicionar exercício
-        val botaoAdicionarExercicio: Button = binding.buttonAdicionarExercicio
-        botaoAdicionarExercicio.setOnClickListener {
+        binding.buttonAdicionarExercicio.setOnClickListener {
             val intent = Intent(this, CriarExercicio::class.java)
             intent.putExtra("categoria", categoria)
             startActivity(intent)
         }
+
+        // Esconder botão de adicionar para alunos
+        if (origemAluno) {
+            binding.buttonAdicionarExercicio.visibility = View.GONE
+        }
+
+        carregarExercicios()
     }
 
     override fun onResume() {
         super.onResume()
-        atualizarLista()
+        carregarExercicios()
     }
 
-    private fun atualizarLista() {
-        listaExerciciosView.removeAllViews()
+    private fun carregarExercicios() {
+        binding.linearLayoutExercises.removeAllViews()
 
-        val exerciciosDaCategoria = BancoTemporario.listaExercicios.filter { it.categoria == categoria }
+        lifecycleScope.launch {
+            val exercicios = ExercicioRepository.listarExerciciosPorCategoria(categoria)
 
-        if (exerciciosDaCategoria.isEmpty()) {
-            textoStatus.visibility = View.VISIBLE
-            textoStatus.text = "Nenhum exercício encontrado para essa categoria"
-        } else {
-            textoStatus.visibility = View.GONE
-            for (exercicio in exerciciosDaCategoria) {
-                val exercicioView = TextView(this)
-                exercicioView.text = "Nome: ${exercicio.nome}\nEquipamento: ${exercicio.equipamento}"
-                exercicioView.setPadding(16, 16, 16, 0)
-                listaExerciciosView.addView(exercicioView)
+            if (exercicios.isEmpty()) {
+                binding.textViewNoExercises.visibility = View.VISIBLE
+                binding.textViewNoExercises.text = "Nenhum exercício encontrado para essa categoria"
+            } else {
+                binding.textViewNoExercises.visibility = View.GONE
 
-                val editarDeletarView = TextView(this)
-                editarDeletarView.text = "editar/deletar"
-                editarDeletarView.setPadding(16, 0, 16, 16)
-                editarDeletarView.setTextColor(resources.getColor(android.R.color.holo_blue_dark))
-                editarDeletarView.setOnClickListener {
-                    val intent = Intent(this, EditarExercicio::class.java)
-                    intent.putExtra("exercicioId", exercicio.id)
-                    startActivity(intent)
+                for (exercicio in exercicios) {
+                    val exercicioView = layoutInflater.inflate(
+                        R.layout.item_exercicio_lista,
+                        binding.linearLayoutExercises,
+                        false
+                    )
+
+                    val nomeTextView = exercicioView.findViewById<TextView>(R.id.textViewNomeExercicio)
+                    val detalhesTextView = exercicioView.findViewById<TextView>(R.id.textViewDetalhesExercicio)
+                    val editarTextView = exercicioView.findViewById<TextView>(R.id.textViewEditarExercicio)
+
+                    nomeTextView.text = exercicio.nome
+                    detalhesTextView.text = "Equipamento: ${exercicio.equipamento}"
+
+                    if (origemAluno) {
+                        editarTextView.visibility = View.GONE
+                    } else {
+                        editarTextView.setOnClickListener {
+                            val intent = Intent(this@Categorias, EditarExercicio::class.java)
+                            intent.putExtra("exercicioId", exercicio.id)
+                            startActivity(intent)
+                        }
+                    }
+
+                    binding.linearLayoutExercises.addView(exercicioView)
                 }
-                listaExerciciosView.addView(editarDeletarView)
             }
         }
     }

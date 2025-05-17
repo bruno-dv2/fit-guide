@@ -7,7 +7,8 @@ data class Exercicio(
     var musculosTrabalhados: String,
     var linkVideo: String,
     val categoria: String,
-    val id: Int = nextId++
+    val id: Int = nextId++,
+    val equipamentoId: String? = null  // Adicionando esta propriedade
 ) {
     companion object {
         private var nextId = 1
