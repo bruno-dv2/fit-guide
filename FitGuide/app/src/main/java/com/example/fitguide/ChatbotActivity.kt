@@ -38,6 +38,9 @@ class ChatbotActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chatbot)
 
+        // Inicializar o ChatGptClient com o contexto da aplicação
+        ChatGptClient.initialize(applicationContext)
+
         editTextMensagem = findViewById(R.id.editTextMensagem)
         buttonEnviar = findViewById(R.id.buttonEnviar)
         recyclerViewMensagens = findViewById(R.id.recyclerViewMensagens)

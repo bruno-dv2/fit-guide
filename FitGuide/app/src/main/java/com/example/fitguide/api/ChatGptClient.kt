@@ -1,5 +1,6 @@
 package com.example.fitguide.api
 
+import android.content.Context
 import android.util.Log
 import okhttp3.Dns
 import okhttp3.OkHttpClient
@@ -18,14 +19,14 @@ class CustomDns : Dns {
         "1.1.1.1",      // Cloudflare DNS
         "1.0.0.1"       // Cloudflare DNS alternativo
     )
-    
+
     override fun lookup(hostname: String): List<InetAddress> {
         try {
             // Tenta o DNS padrão primeiro
             return Dns.SYSTEM.lookup(hostname)
         } catch (e: UnknownHostException) {
             Log.e("CustomDns", "Falha ao resolver $hostname com DNS padrão: ${e.message}")
-            
+
             // Se falhar, tenta com servidores DNS públicos
             for (dnsServer in PUBLIC_DNS_SERVERS) {
                 try {
@@ -40,7 +41,7 @@ class CustomDns : Dns {
                     // Continua para o próximo servidor DNS
                 }
             }
-            
+
             // Se todos falharem, lança a exceção original
             throw UnknownHostException("Não foi possível resolver o hostname $hostname com nenhum DNS")
         }
@@ -51,9 +52,10 @@ object ChatGptClient {
     private const val BASE_URL = "https://api.openai.com/"
     private const val TAG = "ChatGptClient"
 
-    // A chave da API deve ser configurada no arquivo ApiConfig.kt
-    // Este arquivo não deve ser enviado para o controle de versão
-    private val API_KEY = "CHAVE_REMOVIDA_POR_SEGURANCA" // Substitua pela sua chave real antes de executar o app
+    // A chave da API é obtida do arquivo local.properties
+    // Este arquivo não é enviado para o controle de versão
+    private var apiKey: String = "CHAVE_REMOVIDA_POR_SEGURANCA" // Será substituída em tempo de execução
+    private var isInitialized = false
 
     private val okHttpClient: OkHttpClient by lazy {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -69,11 +71,11 @@ object ChatGptClient {
                 try {
                     Log.d(TAG, "Enviando requisição: ${request.url}")
                     Log.d(TAG, "Headers: ${request.headers}")
-                    
+
                     // Tenta resolver o host manualmente antes de fazer a requisição
                     val host = request.url.host
                     Log.d(TAG, "Tentando resolver host: $host")
-                    
+
                     val response = chain.proceed(request)
                     Log.d(TAG, "Resposta recebida: ${response.code}")
                     if (!response.isSuccessful) {
@@ -110,7 +112,19 @@ object ChatGptClient {
         retrofit.create(ChatGptService::class.java)
     }
 
+    /**
+     * Inicializa o cliente com o contexto da aplicação
+     * Deve ser chamado antes de usar o cliente
+     */
+    fun initialize(context: Context) {
+        if (!isInitialized) {
+            apiKey = ApiKeyManager.getApiKey(context)
+            isInitialized = true
+            Log.d(TAG, "ChatGptClient inicializado com sucesso")
+        }
+    }
+
     fun getAuthorizationHeader(): String {
-        return "Bearer $API_KEY"
+        return "Bearer $apiKey"
     }
 }
