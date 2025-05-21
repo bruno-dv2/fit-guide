@@ -1,0 +1,2 @@
+# Ignorar o arquivo de configuração da API que contém chaves sensíveis
+ApiConfig.kt

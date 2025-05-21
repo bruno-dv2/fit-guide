@@ -1,0 +1,12 @@
+package com.example.fitguide.api
+
+/**
+ * Classe para armazenar configurações de API
+ * Este é um arquivo de exemplo. Copie para ApiConfig.kt e adicione sua chave de API.
+ */
+object ApiConfig {
+    // IMPORTANTE: Esta é uma chave de API da OpenAI
+    // Formato para API normal: "sk-abcdefghijklmnopqrstuvwxyz123456789"
+    // Formato para API de organização: "Bearer org-abcdefghijklmnopqrstuvwxyz123456789"
+    const val OPENAI_API_KEY = "SUA_CHAVE_DE_API_AQUI"
+}
