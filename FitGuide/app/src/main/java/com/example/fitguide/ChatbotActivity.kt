@@ -65,7 +65,7 @@ class ChatbotActivity : AppCompatActivity() {
                 // Adicionar mensagem do usuário à interface
                 listaMensagens.add(Mensagem(mensagemTexto, TipoMensagem.USUARIO))
                 adapter.notifyItemInserted(listaMensagens.size - 1)
-                scrollToBottom() // Usar método personalizado para scroll
+                scrollToBottom() // Usar método personalizado para scrol
                 editTextMensagem.text.clear()
 
                 // Adicionar mensagem do usuário ao histórico
