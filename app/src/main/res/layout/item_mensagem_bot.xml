@@ -2,24 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp">
 
     <TextView
         android:id="@+id/textViewMensagemBot"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/mensagem_bot_background"
         android:padding="12dp"
         android:textColor="@android:color/black"
-        android:textIsSelectable="true"
-        android:autoLink="web"
-        android:maxWidth="280dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="wrap"
-        app:layout_constraintWidth_percent="0.8"
-        tools:text="Mensagem longa do bot que pode conter várias linhas de texto e precisa ser exibida corretamente com quebra de linha e scroll." />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,21 +46,17 @@
             android:layout_marginStart="16dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Lista de mensagens com ScrollView -->
+    <!-- Lista de mensagens -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMensagens"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="16dp"
-        android:scrollbars="vertical"
-        android:fadeScrollbars="false"
-        android:clipToPadding="false"
-        android:overScrollMode="always"
         app:layout_constraintTop_toBottomOf="@id/cabecalho"
         app:layout_constraintBottom_toTopOf="@id/layoutEnviarMensagem"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
+        
     <!-- ProgressBar para indicar carregamento -->
     <ProgressBar
         android:id="@+id/progressBar"
